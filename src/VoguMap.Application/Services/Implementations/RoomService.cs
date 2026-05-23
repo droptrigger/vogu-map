@@ -64,7 +64,7 @@ namespace VoguMap.Application.Services.Implementations
         }
 
         /// <inheritdoc/>
-        public async Task<IReadOnlyList<RoomGetDto>> GetAsync(RoomFilter filter, CancellationToken token = default)
+        public async Task<IReadOnlyList<RoomGetDto>> GetAsync(RoomFilterDto filter, CancellationToken token = default)
         {
             ArgumentNullException.ThrowIfNull(filter);
             await ValidateBuildingIdAsync(filter.BuildingId, token);
@@ -72,7 +72,9 @@ namespace VoguMap.Application.Services.Implementations
             if (string.IsNullOrWhiteSpace(filter.Name))
                 throw new ValidationException("The field Name is required.");
 
-            var result = await _roomRepository.GetAsync(filter, token);
+            var domainFilter = new RoomFilter(filter.BuildingId, filter.Name, filter.Floor);
+
+            var result = await _roomRepository.GetAsync(domainFilter, token);
             return _mapper.Map<IReadOnlyList<RoomGetDto>>(result);
         }
 
@@ -219,7 +221,7 @@ namespace VoguMap.Application.Services.Implementations
         /// <param name="floor">Этаж.</param>
         private void ValidateFloor(int floor)
         {
-            if (floor < 2 || floor > 5)
+            if (floor < -2 || floor > 5)
                 throw new ValidationException("The floor must be between -2 and 5");
         }
 

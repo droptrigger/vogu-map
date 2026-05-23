@@ -56,7 +56,7 @@ namespace VoguMap.Application.Services.Interfaces
         /// <param name="token">Токен отмены операции.</param>
         /// <returns>Найденные помещения.</returns>
         Task<IReadOnlyList<RoomGetDto>> GetAsync(
-            RoomFilter filter,
+            RoomFilterDto filter,
             CancellationToken token = default);
 
         /// <summary>
