@@ -1,6 +1,15 @@
+using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using VoguMap.Application.Mappings;
+using VoguMap.Application.Services.Implementations;
+using VoguMap.Application.Services.Interfaces;
+using VoguMap.Domain.Interfaces.Repositories;
 using VoguMap.Infrastructure.Persistence.Context;
+using VoguMap.Infrastructure.Persistence.Repositories;
+using VoguMap.Web.Middlewares;
+
+// Поиск .env файла
+Env.TraversePath().Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +46,20 @@ builder.Services.AddAutoMapper(
     typeof(RoomProfile).Assembly,
     typeof(BuildingProfile).Assembly
 );
+
+#endregion
+
+#region Репозитории
+
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
+
+#endregion
+
+#region Сервисы
+
+builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
 
 #endregion
 
