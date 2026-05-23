@@ -1,5 +1,6 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using VoguMap.Application.Mappings;
 using VoguMap.Application.Services.Implementations;
 using VoguMap.Application.Services.Interfaces;
@@ -63,6 +64,34 @@ builder.Services.AddScoped<IBuildingService, BuildingService>();
 
 #endregion
 
+// Добавление контроллеров
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        {
+            // Игнорирование циклических ссылок при сериализации JSON
+            options.JsonSerializerOptions.ReferenceHandler =
+                System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+            // Игнорирование null значений
+            options.JsonSerializerOptions.DefaultIgnoreCondition =
+                System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+        }
+    );
+
+#region Swagger
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "VoguMap API",
+        Version = "v1",
+        Description = "API для управления корпусами и помещениями",
+        Contact = new OpenApiContact { Name = "Support", Email = "vasya.domakov@mail.ru" }
+    });
+});
+
+#endregion
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -81,6 +110,9 @@ if (app.Environment.IsDevelopment())
     var context = scope.ServiceProvider.GetRequiredService<VoguMapContext>();
     context.Database.Migrate();
 
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VoguMap API v1"));
+
     // Configure the HTTP request pipeline.
     app.MapOpenApi();
 }
@@ -88,5 +120,6 @@ if (app.Environment.IsDevelopment())
 #endregion
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
 app.Run();
