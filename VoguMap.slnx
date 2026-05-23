@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/VoguMap.Application/VoguMap.Application.csproj" />
+    <Project Path="src/VoguMap.Domain/VoguMap.Domain.csproj" />
+    <Project Path="src/VoguMap.Infrastructure/VoguMap.Infrastructure.csproj" />
+    <Project Path="src/VoguMap.Web/VoguMap.Web.csproj" />
+  </Folder>
+</Solution>
