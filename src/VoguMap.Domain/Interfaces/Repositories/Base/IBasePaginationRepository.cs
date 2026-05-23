@@ -10,7 +10,8 @@ namespace VoguMap.Domain.Interfaces.Repositories.Base
     /// <typeparam name="TEntity">
     /// Тип сущности для пагинации
     /// </typeparam>
-    public interface IBasePaginationRepository<TEntity>
+    public interface IBasePaginationRepository<TEntity> 
+        where TEntity : class
     {
         /// <summary>
         /// Получает пагинированный список сущностей с фильтрацией и сортировкой.

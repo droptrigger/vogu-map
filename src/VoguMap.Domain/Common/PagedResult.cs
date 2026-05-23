@@ -70,5 +70,14 @@ namespace VoguMap.Domain.Common
             PageSize = pageSize;
         }
 
+        /// <summary>
+        /// Создаёт пустой результат пагинации для случаев, когда данные не найдены.
+        /// </summary>
+        /// <param name="page">Текущая страница (по умолчанию 1).</param>
+        /// <param name="pageSize">Размер страницы (по умолчанию 10).</param>
+        /// <returns>Экземпляр <see cref="PagedResult{TEntity}"/> с пустой коллекцией и <c>TotalCount = 0</c>.</returns>
+        public static PagedResult<TEntity> Empty(int page = 1, int pageSize = 10) =>
+            new(Array.Empty<TEntity>(), 0, page, pageSize);
+
     }
 }

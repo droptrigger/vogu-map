@@ -10,6 +10,8 @@ namespace VoguMap.Domain.Interfaces.Repositories.Base
     /// Идентификатор (GUID или int)
     /// </typeparam>
     public interface IBaseUpdateRepository<TEntity, TKey>
+        where TEntity : class
+        where TKey : struct
     {
         /// <summary>
         /// Получение сущности со свойством Tracked (отслеживаемой)

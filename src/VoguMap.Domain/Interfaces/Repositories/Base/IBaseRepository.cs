@@ -10,6 +10,8 @@ namespace VoguMap.Domain.Interfaces.Repositories.Base
     /// Идентификатор (GUID или int)
     /// </typeparam>
     public interface IBaseRepository<TEntity, TKey>
+        where TEntity : class
+        where TKey : struct
     {
         /// <summary>
         /// Получение сущности по ID
@@ -32,10 +34,10 @@ namespace VoguMap.Domain.Interfaces.Repositories.Base
         /// <summary>
         /// Удаление сущности по ID
         /// </summary>
-        /// <param name="id">ID</param>
+        /// <param name="entity">Сущность для удаления.</param>
         /// <param name="token">Токен отмены операции</param>
-        Task DeleteByIdAsync(
-            TKey id,
+        Task DeleteAsync(
+            TEntity entity,
             CancellationToken token = default);
 
         /// <summary>
