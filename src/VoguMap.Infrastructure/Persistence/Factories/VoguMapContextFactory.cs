@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore.Design;
-using VoguMap.Infrastructure.Data.Context;
+using VoguMap.Infrastructure.Persistence.Context;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
-namespace VoguMap.Infrastructure.Data.Factories
+namespace VoguMap.Infrastructure.Persistence.Factories
 {
     public class VoguMapContextFactory : IDesignTimeDbContextFactory<VoguMapContext>
     {

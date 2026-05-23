@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VoguMap.Domain.Entities;
 
-namespace VoguMap.Infrastructure.Data.Context;
+namespace VoguMap.Infrastructure.Persistence.Context;
 
 public partial class VoguMapContext : DbContext
 {

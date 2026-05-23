@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using VoguMap.Infrastructure.Data.Context;
+using VoguMap.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
