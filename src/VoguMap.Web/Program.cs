@@ -7,6 +7,7 @@ using VoguMap.Application.Services.Interfaces;
 using VoguMap.Domain.Interfaces.Repositories;
 using VoguMap.Infrastructure.Persistence.Context;
 using VoguMap.Infrastructure.Persistence.Repositories;
+using VoguMap.Infrastructure.Persistence.Seed;
 using VoguMap.Web.Middlewares;
 
 // Поиск .env файла
@@ -104,12 +105,16 @@ app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 #region Миграции
 
+using var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<VoguMapContext>();
+
+// Занесение справочных данных
+ApplicationDbSeeder.SeedBuildings(context);
+
 if (app.Environment.IsDevelopment())
 {
-    using var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<VoguMapContext>();
     context.Database.Migrate();
-
+    
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VoguMap API v1"));
 
