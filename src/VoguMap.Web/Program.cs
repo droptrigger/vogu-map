@@ -47,6 +47,9 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+// Глобальная обработка исключений
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+
 #region Миграции
 
 if (app.Environment.IsDevelopment())
