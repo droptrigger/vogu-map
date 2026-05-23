@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using VoguMap.Application.Mappings;
 using VoguMap.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,17 @@ builder.Services.AddDbContext<VoguMapContext>(options =>
     options.UseNpgsql(connectionString));
 
 #endregion
+
+#region AutoMapper
+
+builder.Services.AddAutoMapper(
+    cfg => { },
+    typeof(RoomProfile).Assembly,
+    typeof(BuildingProfile).Assembly
+);
+
+#endregion
+
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
