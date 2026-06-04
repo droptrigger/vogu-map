@@ -108,13 +108,12 @@ app.UseMiddleware<ExceptionHandlerMiddleware>();
 using var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<VoguMapContext>();
 
+context.Database.Migrate();
 // Занесение справочных данных
 ApplicationDbSeeder.SeedBuildings(context);
 
 if (app.Environment.IsDevelopment())
-{
-    context.Database.Migrate();
-    
+{   
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VoguMap API v1"));
 
